@@ -9,10 +9,12 @@ jobs:
     steps:
       - name: Get code
         uses: actions/checkout@v3
+      - run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
+        id: blablub
       - name: Cache dependencies
         uses: actions/cache@v3
         with:
-          path: ~/.npm
+          path: ~/.node-modules
           key: deps-node-mods-${{hashFiles('**/package-lock.json')}}
       - name: Install dependenciessss
         run: npm ci
@@ -20,6 +22,7 @@ jobs:
         run: npm run lint
       - name: Test code
         run: npm run test
+      - run: echo "${{ steps.blablub.outputs.dir }}"
   build:
     needs: test
     runs-on: ubuntu-latest
