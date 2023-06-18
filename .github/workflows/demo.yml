@@ -32,7 +32,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.npm
-          key: deps-node-mods-${{hashFiles('**/package-loch.json')}}
+          key: deps-node-mods-${{hashFiles('**/package-lock.json')}}
       - name: Install dependencies
         run: npm ci
       - name: Build website
