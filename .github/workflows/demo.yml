@@ -13,7 +13,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.npm
-          key: deps-node-mods-${{hashFiles('**/package-loch.json')}}
+          key: deps-node-mods-${{hashFiles('**/package-lock.json')}}
       - name: Install dependenciessss
         run: npm ci
       - name: Lint code
