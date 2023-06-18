@@ -18,6 +18,8 @@ jobs:
   build:
     needs: test
     runs-on: ubuntu-latest
+    outputs:
+      myoutput: ${{steps.jsfilename.outputs.idkfa}}
     steps:
       - name: Get code
         uses: actions/checkout@v3
@@ -25,9 +27,12 @@ jobs:
         run: npm ci
       - name: Build website
         run: npm run build
+      - name: output js filename
+        id: jsfilename
+        run: find dist/assets/*.js -type f -execdir echo 'idkfa={}' >> $GITHUB_OUTPUT ';'
       - name: Upload dist
         uses: actions/upload-artifact@v3
-        with: 
+        with:
           name: dist-files
           path: dist
           # path: |
@@ -41,7 +46,8 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: dist-files
-      - name: output contents
-        run: ls
+      - run: ls
+      - name: output filename
+        run: echo "${{needs.build.outputs.myoutput}}"
       - name: Deploy
         run: echo "Deploying..."
